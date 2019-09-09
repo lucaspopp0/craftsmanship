@@ -1,6 +1,10 @@
 build
+bin
 report
 .idea
+doc
+out
 
 .classpath
 .project
+*.iml
