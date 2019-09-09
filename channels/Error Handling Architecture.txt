@@ -1,0 +1,25 @@
+For our component, we worked to avoid failure in as many cases as possible, skipping over garbled or invalid inputs
+instead. If a line in the transmission didn't follow the specific correct format specified in the design document, we
+simply skipped over it and moved to the next line.
+
+The only cases in which the program indicated a problem were:
+1) If not enough valid information was available to determine whether or not to connect
+2) If the transmission's preamble was too long
+3) If there was an error reading from the input stream
+
+The rest of the possible errors are handles by returning neutral values for invalid instructions or by substituting the
+invalid data with the closest legal value.
+
+An example of returning neutral values is in Parser.nextInstruction when it comes into contact with garbled or invalid
+input or commands it returns an Instruction with neutral state value of NULL command and NULL value which is a static
+field stored in the Instruction class
+
+An example of substituting the invalid data with the closest legal value is for the case of a valid
+command but an invalid value (e.g. TO BRAVO) Parser.nextInstruction will return a new Instruction with the command "TO"
+stored and with a stored value of NULL since it was not valid
+
+This is done by the parser class creating instructions based off of the
+data currently being interpreted. if some part of the parsed instruction
+given by the parser class is incorrect, the reader class will read through these
+instructions only looking for valid instruction. Once a valid instruction is found it
+then processes it to store its information.
